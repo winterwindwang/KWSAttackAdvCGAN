@@ -7,8 +7,9 @@ Setup
 --------------------------
    The pre-trained victim model is available for use and can be downloaded from [here](https://drive.google.com/drive/folders/1b_CpcS6Yf3dpcDYKqIt1WSSr2y3B-gI9?usp=sharing)
     
-   The pre-trained target(generator) model is available for use and can be downloaded from [here](https://drive.google.com/open?id=1bBHAUwbfS34RDe-uk2j903cStBf5Ko0E)(need to modify)
-    
+   The pre-trained target(generator) model is available for use and can be downloaded from
+   single model: link:https://pan.baidu.com/s/1xLJqCljv1mjDSiMZB8mrGw  fetech code：gk5c 
+   multi-model ensemble: link：https://pan.baidu.com/s/1geJxrXoJxVYgLIyX5c3q0A  fetech code：8h7s 
    Notice: The directory structure of the checkpoints file is as follows: 
 
     |-- checkpoints
