@@ -14,8 +14,8 @@ import torchvision
 import numpy as np
 import random
 import models
-from models.discriminator import Discriminator, CDiscriminator
-from models.generator import Generator, CGenerator
+from models.discriminator import CDiscriminator
+from models.generator import CGenerator
 from datasets import *
 import torchnet.meter as meter
 import warnings
@@ -256,7 +256,6 @@ def valid(epoch):
 
     if accuracy > best_accuracy:
         best_accuracy = accuracy
-        # wav_save(epoch, fakes, 'samples/best_attack', labels, target, 'best_att')
         torch.save(checkpoint, 'checkpoints/generator/best-acc-generator-checkpoint-%s.pth' % full_name)
         torch.save(G, 'runs/model/%d-%s-best-loss.pth' % (start_timestamp, full_name))
     if epoch_loss < best_loss:
@@ -306,18 +305,15 @@ if __name__ == '__main__':
     parser.add_argument('--train_dataset', type=str, default=r'E:\exp\speech_commands\train', help='datasets/speech_commands/train')
     parser.add_argument('--valid_dataset', type=str, default=r'E:\exp\speech_commands\valid', help='datasets/speech_commands/valid')
     parser.add_argument('--test_dataset', type=str, default=r'E:\exp\speech_commands\test', help='datasets/speech_commands/test')
-    parser.add_argument('--data_dir', type=str, default='./data', help='')
     parser.add_argument("--comment", type=str, default='', help='comment in tensorboard title')
-    parser.add_argument('--sample_dir', type=str, default='./data', help='')
     parser.add_argument('--checkpoint', type=str, default='./checkpoints', help='')# resnext(13)+denset(16)  resnet18(5)+widerestnet(11)
-    parser.add_argument('--model', choices=models.available_models, default=models.available_models[11],
+    parser.add_argument('--model', choices=models.available_models, default=models.available_models[0],
                         help='model of NN')                                     # dpn92(14) + vgg19(4)
-    parser.add_argument('--model1', choices=models.available_models, default=models.available_models[14],
+    parser.add_argument('--model1', choices=models.available_models, default=models.available_models[0],
                         help='model of NN')
-    parser.add_argument('--model2', choices=models.available_models, default=models.available_models[4],
+    parser.add_argument('--model2', choices=models.available_models, default=models.available_models[1],
                         help='model of NN')
     parser.add_argument("--dataload-workers-nums", type=int, default=6, help='number of workers for dataloader')
-    parser.add_argument("--weight-decay", type=float, default=1e-2, help='weight decay')
     parser.add_argument("--pre_trained", type=bool, default=True, help='checkpoint file to resume')
     parser.add_argument("--lr-scheduler", choices=['plateau', 'step'], default='plateau',
                         help='method to adjust learning rate')
@@ -365,11 +361,8 @@ if __name__ == '__main__':
     mfcc_layer = MFCC(winlen=0.02, winstep=0.032, numcep=26).to(device)  # MFCC layer
     if use_gpu:
         f = torch.nn.DataParallel(f).cuda()
-        # f1 = torch.nn.DataParallel(f1).cuda()
-        # f2 = torch.nn.DataParallel(f2).cuda()
         G = torch.nn.DataParallel(G).cuda()
         D = torch.nn.DataParallel(D).cuda()
-    criterion_db = dBLoss
     criterion_gan = nn.MSELoss()
     criterion_l1 = nn.L1Loss()
     criterion_l2 = nn.MSELoss()

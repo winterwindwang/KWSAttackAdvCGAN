@@ -1,6 +1,6 @@
 import torch
 import torchvision
-from models.generator import Generator, CGenerator
+from models.generator import CGenerator
 from scipy.io import wavfile
 from datasets import *
 from torch.utils.data import DataLoader

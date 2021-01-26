@@ -1,5 +1,5 @@
-from models.discriminator import Discriminator
-from models.generator import Generator, Generator_pert
+from models.discriminator import CDiscriminator
+from models.generator import CGenerator
 import torch
 import numpy as np
 import argparse
@@ -30,7 +30,7 @@ if __name__ == '__main__':
     args = parse.parse_args()
     use_gpu = torch.cuda.is_available()
 
-    G = Generator()
+    G = CGenerator()
 
     f = models.create_model(model_name=args.model, num_classes=10, in_channels=1).cuda()
     mfcc_layer = MFCC(samplerate=16384, numcep=32, nfft=2048, nfilt=32).cuda()  # MFCC layer
