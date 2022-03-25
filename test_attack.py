@@ -33,7 +33,7 @@ if __name__ == '__main__':
     G = CGenerator()
 
     f = models.create_model(model_name=args.model, num_classes=10, in_channels=1).cuda()
-    mfcc_layer = MFCC(samplerate=16384, numcep=32, nfft=2048, nfilt=32).cuda()  # MFCC layer
+    mfcc_layer = MFCC(winlen=0.02, winstep=0.032, numcep=26).to(device)  # MFCC laye
     print("Loading a pretrained victim model ")
     checkpoint = torch.load(
         args.checkpoints+'/wideResNet28_10.pth')  #
